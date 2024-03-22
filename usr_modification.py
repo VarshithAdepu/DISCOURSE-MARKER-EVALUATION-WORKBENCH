@@ -27,7 +27,7 @@ def convert_to_usr2(file_path):
         return process_result(result)
 
 def process_result(result):
-    with open('annotated_text1.txt', 'r', encoding='utf-8') as file:
+    with open('annotated_text_after_modification.txt', 'r', encoding='utf-8') as file:
         lines = file.readlines()
         for i in range(len(lines)):
             id1 = lines[i].split(' ')
