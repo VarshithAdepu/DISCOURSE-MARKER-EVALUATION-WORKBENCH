@@ -86,5 +86,5 @@ def convert_to_eng(input_text):
     return hindi_text
 
 if __name__ == "__main__":
-    file_path = 'uploaded_file'
+    file_path = 'upload_file'
     convert_to_usr2(file_path)
