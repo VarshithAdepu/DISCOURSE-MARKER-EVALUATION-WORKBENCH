@@ -233,7 +233,7 @@ def is_valid_user(username):
 @app.route('/save_duplicate_file', methods=['POST'])
 def save_duplicate_file():
     file = request.files['fileInput']
-    filename = 'uploaded_file'
+    filename = 'upload_file'
     file.save(os.path.join(app.root_path, filename))
     return "Duplicate file saved successfully"
 
