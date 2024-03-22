@@ -133,5 +133,10 @@ nil
 <sent_id=Geo_ncert_11stnd_6ch-bk1_0078a> रासायनिक प्रक्रियाएँ सामान्यतः कणों के बीच के बंधन को ढीला {करते हैं}। </sent_id> समानकाल <sent_id=Geo_ncert_11stnd_6ch-bk1_0078b> विलेय पदार्थों को घुला {देते हैं}। </sent_id> 
 ```
 
+## 🔗 Links
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adepu-varshith-kumar-098b75235/)
+
+
     
 
