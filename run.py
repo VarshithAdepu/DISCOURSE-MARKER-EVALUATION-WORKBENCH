@@ -357,7 +357,7 @@ def save_to_file():
     data = request.json
     modified_text = data.get('text', '')
 
-    with open('annotated_text1.txt', 'w') as file:
+    with open('annotated_text_after_modification.txt', 'w') as file:
         file.write(modified_text)
 
     subprocess.run(['python3', 'usr_modification.py'])
