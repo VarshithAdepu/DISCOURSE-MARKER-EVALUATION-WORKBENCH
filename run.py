@@ -292,65 +292,6 @@ def process_input_2():
             return str(e), 500
     else:
         return 'No file uploaded', 400
-
-
-
-@app.route('/process_discourse', methods=['POST'])
-def process_discourse():
-    input_text = request.form['output']
-    username = request.form['username']
-    # Check if the user is valid
-    if is_valid_user(username):
-        result_text, relation_list = run_discourse_script(input_text)
-        run_graph_script()
-        output_data = {
-            'result_text': result_text,
-            'relation': relation_list
-        }
-        return jsonify(output_data)
-    else:
-        return jsonify({'error': 'Invalid user'})
-
-def run_graph_script():
-    graph_script_path = 'graph.py'
-    dot_command = "dot -Tpng input.dot -o static/output.png"
-    subprocess.run(['/usr/bin/python3', graph_script_path], capture_output=True, text=True)
-    subprocess.run(dot_command, shell=True)
-
-def run_python_script(input_text):  
-    script_path = 'sentence_subparts.py'
-
-    with open('sentence_input.txt', 'w') as result_file:
-        result_file.write(input_text)
-    result = subprocess.run(['/usr/bin/python3', script_path, input_text], capture_output=True, text=True)
-
-    if result.returncode != 0:
-        raise Exception(f"Subprocess failed with error: {result.stderr}")
-
-    with open('sentence_output.txt', 'r') as result_file:
-        result_text = result_file.read()
-
-    return result_text
-
-def run_discourse_script(input_text):
-    script_path = 'discourse_Sent.py'
-
-    with open('sentence_output.txt', 'w') as result_file:
-        result_file.write(input_text)
-
-    result_process = subprocess.run(['/usr/bin/python3', script_path], capture_output=True, text=True)
-
-    if result_process.returncode != 0:
-        raise Exception(f"Subprocess failed in discourse with error: {result_process.stderr}")
-
-    with open('relation.txt', 'r') as result_file:
-        relation = result_file.read()
-    
-    with open('sentence_output.txt', 'r') as result_file:
-        result_text = result_file.read()
-
-    relation_list = relation.split(',')
-    return result_text, relation_list
     
 @app.route('/save_to_file', methods=['POST'])
 def save_to_file():
