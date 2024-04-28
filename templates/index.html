@@ -25,6 +25,18 @@
             font-weight: bold;
             color: #bcdda0;
         }
+        .edit-buttons-container {
+        position: absolute;
+        top: 46px; /* Adjust as needed */
+        right: 60px; /* Adjust as needed */
+        display: flex;
+        justify-content: flex-end; /* Align buttons to the right */
+        text-align: right;
+    }
+
+    .edit-buttons-container button {
+        margin: 35px; /* Add space between buttons */
+    }
 
         #container {
             position: relative;
@@ -69,14 +81,56 @@
         .ok-button {
         /* Existing styles */
             font-size: 1.2em;
-            width: 10%;
-            height: 10%;
+            width: 5%;
+            height: 5%;
             padding: 0; /* Remove padding */
             border-radius: 4px;
         }
 
         .ok-button:hover {
             /* Existing styles */
+            background-color: #45a049 !important;
+        }
+        .Relation-button{
+            font-size: 1.2em;
+            padding: 1em;
+            height: 36%;
+            padding: 12px;
+            width: calc(100% - 70%);
+            background-color: #74da74;
+            color: #000000;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 200px;
+            outline: none;
+        }
+
+        .Relation-button:hover{
+            background-color: #45a049 !important;
+        }
+        .sentence-button{
+            font-size: 1.2em;
+            padding: 1em;
+            height: 36%;
+            padding: 12px;
+            width: calc(100% - 70%);
+            background-color: #74da74;
+            color: #000000;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 200px;
+            outline: none;
+        }
+
+        .sentence-button:hover{
             background-color: #45a049 !important;
         }
 
@@ -334,12 +388,18 @@
 <body>
 
 <h1>DISCOURSE MARKER EVALUATION WORKBENCH</h1>
-
+<div class="upload-button-container"></div>
 <form id="inputForm" enctype="multipart/form-data">
     <label for="fileInput" class="custom-file-upload">Upload file</label>
     <input type="file" id="fileInput" name="fileInput" onchange="handleFileInputChange()" style="display: none;">
 
 </form>
+
+<div class="edit-buttons-container">
+    <button type="button" onclick="editRelations()">Relation</button>
+    <button type="button" onclick="editSentences()">Sentence</button>
+
+</div>
 
 
 
@@ -363,6 +423,7 @@
     </div>    
 </div>
 <button type="button" id="edit" onclick="showPopup()">Edit</button>
+<!-- Buttons for editing -->
 
 <div id="imageContainer"></div>
 
@@ -384,13 +445,68 @@
 </div>
 
 <script>
+
+
+    // Function to enable editing of dropdowns
+    function editRelations() {
+    var isAuthorized = true; // Assume authentication is successful for demo purposes
+    if (!isAuthorized) {
+        showPopup();
+        return;
+    }
+
+    var outputDiv = document.getElementById('output');
+    var dropdowns = outputDiv.querySelectorAll('select');
+    dropdowns.forEach(function(dropdown) {
+        dropdown.disabled = false;
+    });
+
+    var okButtons = outputDiv.querySelectorAll('.ok-button');
+    okButtons.forEach(function(button) {
+        button.style.display = 'inline'; // Show OK buttons
+    });
+
+    outputDiv.contentEditable = false; // Disable text editing
+}
+
+function editSentences() {
+    // var isAuthorized = true; // Assume authentication is successful for demo purposes
+    if (!isAuthorized) {
+        showPopup();
+        return;
+    }
+
+    var outputDiv = document.getElementById('output');
+    var dropdowns = outputDiv.querySelectorAll('select');
+    dropdowns.forEach(function(dropdown) {
+        dropdown.disabled = true;
+    });
+
+    var okButtons = outputDiv.querySelectorAll('.ok-button');
+    okButtons.forEach(function(button) {
+        button.style.display = 'none'; // Hide OK buttons
+    });
+
+    outputDiv.contentEditable = true; // Enable text editing
+
+    // Create an OK button
+    var okButton = document.createElement('button');
+    okButton.innerText = 'OK';
+    okButton.className = 'ok-button';
+    okButton.onclick = function() {
+        outputDiv.contentEditable = false; // Disable text editing
+        saveModifiedText(); // Save the changes
+        okButton.remove(); // Remove the OK button
+    };
+    outputDiv.parentNode.insertBefore(okButton, outputDiv.nextSibling);
+}
+
     // Function to display the popup
     function showPopup() {
         document.getElementById('popup').style.display = 'block';
     }
 
-    // Function to handle file upload and display contents
-     // Function to handle file upload and display contents
+    
      // Function to handle file upload and display contents
     function handleFileInputChange() {
         var fileInput = document.getElementById('fileInput');
@@ -400,6 +516,8 @@
         reader.onload = function(e) {
             var contents = e.target.result;
             processFileContents(contents, file.name); 
+            
+            
         };
         reader.readAsText(file);
     }
@@ -407,7 +525,7 @@
         function processFileContents(contents, fileName) {
         var blob = new Blob([contents], { type: 'text/plain' }); 
         var formData = new FormData();
-        formData.append('fileInput', blob, fileName); 
+        formData.append('fileInput', blob, fileName);
 
         // Process the file contents using the first route
         var xhr1 = new XMLHttpRequest();
@@ -418,8 +536,8 @@
             }
         };
         xhr1.send(formData);
-
-        // Process the file contents using the second route
+        saveDuplicateFile(blob, fileName);
+        
         var xhr2 = new XMLHttpRequest();
         xhr2.open('POST', '/process_input_2', true);
         xhr2.onload = function () {
@@ -432,11 +550,11 @@
             div.innerHTML = highlightWords(sentence);
             outputElement.appendChild(div);
         });
-        // Save a duplicate of the uploaded file
-        saveDuplicateFile(blob, fileName);
+        
     }
 };
         xhr2.send(formData);
+        
     }
 
     function saveDuplicateFile(blob, fileName) {
@@ -451,6 +569,7 @@
         }
     };
     xhr.send(formData);
+    // runPythonScript(); // Run usr_rel.py
 }
     var isAuthorized = false;
 
@@ -460,7 +579,8 @@
         'वाक्य-कर्म', 'आवश्यकता-परिणाम', 'विरोधी.विपरीत', 'विरोधी_द्योतक',
         'समुच्चय.समावेशी', 'समुच्चय.Inclusive', 'वाक्य-कर्म', 'विरोधि.viparIwa', 
         'परिणाम', 'विरोधि_द्योतक', 'समुच्चय.BI_1', 'समुच्चय.x', 'समुच्चय दोतक', 
-        'इसके परिणाम स्वरुप'
+        'इसके परिणाम स्वरुप',
+    
     ];
 
     if (!isAuthorized) {
@@ -507,8 +627,6 @@ function replaceText(selectElement, uniqueId) {
     
     // Create a new dropdown select element
     var newSelectElement = document.createElement('select');
-    // newSelectElement.innerHTML = selectElement.innerHTML;
-    // newSelectElement.value = replacementText;
 
     // Create an OK button
     var okButton = document.createElement('button');

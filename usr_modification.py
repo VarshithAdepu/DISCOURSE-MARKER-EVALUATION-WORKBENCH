@@ -32,8 +32,14 @@ def process_result(result):
         for i in range(len(lines)):
             id1 = lines[i].split(' ')
             id2, id_word = find_words_in_list(id1)
+            # s1=lines[i].replace('>',' ').replace('<',' ')
+            # s1=s1.split('  ')
+            
+            # l1=get_id_from_annotated(lines[i].split())
+
             for j in range(len(result)):
                 l = result[j][7]
+                id0=get_id1(result[j][0])
                 n = get_id1(l)  
                 l = l.split(',')
                 if len(id_word) != 0 and n == get_id1(id2):
@@ -42,7 +48,18 @@ def process_result(result):
                     new_res += get_id1(id2) + '.' + extract_digit(l) + ':' + convert_to_eng(id_word[0]) + ' '
                     if get_relation(l) != convert_to_eng(id_word[0]):
                         result[j][7] = result[j][7].replace(l, new_res)
-                        print(('').join(result[j][7]))
+                        # print(('').join(result[j][7]))
+                # print(get_id1(result[j][0]),get_id1(result[j+1][0]))
+                # if len(l1)>=2 and (l1[1]==get_id1(result[j][0])):
+                    # print(lines[i].split('> '))
+                    # print(s1[1])
+                    # print('sss',l1[1])
+                    # print(get_id1(result[j][0]),get_id1(result[j+1][0]))
+
+                # elif len(l1)==1 and (l1[0]==get_id1(result[j][0])):
+                #     print(s1[1])
+
+            
 
         with open('duplicate_uploaded_file', 'w', encoding='utf-8') as file:
             for i in range(len(result)):
@@ -56,6 +73,7 @@ def process_result(result):
                                 element = ""
                             output_string += element
                     file.write(output_string + '\n')
+
 
 def find_words_in_list(given_list):
     found_words = [word for word in given_list if word in relations]
