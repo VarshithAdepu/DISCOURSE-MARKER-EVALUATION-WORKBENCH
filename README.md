@@ -32,7 +32,7 @@ Install the required libraries:
 ## Usage
 
 1. Prepare Input Files: 
-    Place the text file to be processed in the project directory with the name uploaded_file.
+    Place the text file to be processed in the project directory with the name upload_file.
     
 2. Ensure that the file format matches the expected format for processing.
 3. Run the run.py script
