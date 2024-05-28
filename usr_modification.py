@@ -61,7 +61,7 @@ def process_result(result):
 
             
 
-        with open('duplicate_uploaded_file', 'w', encoding='utf-8') as file:
+        with open('usr_after_modification', 'w', encoding='utf-8') as file:
             for i in range(len(result)):
                 for row_number in range(len(result[i])):
                     output_string = ""
