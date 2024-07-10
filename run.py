@@ -123,7 +123,7 @@ def f2(result):
         l = result[i][7]
         n = get_id1(l)  # example 1a ,1b
         l = l.split()
-        print(l)
+        # print(l)
         ki1=result[i][1][1:].split()
 
         if n and len(l) >= 2:
@@ -144,7 +144,6 @@ def f2(result):
                     sentence_without_hash1 = remove_word(sentence_without_hash1)
                     s.append('<<'+'o'+'>sent_id='+k2+'>' + " " + sentence_without_hash1 + ' <<'+'o'+'>/sent_id> ' + rel1 + " ")
             if i==len(result)-2:
-                print("var")
                 k1=get_id1(id_1)
                 sentence_without_hash1=result[i+1][1][1:]
                 sentence_without_hash1=remove_word(sentence_without_hash1)
@@ -191,14 +190,14 @@ def f2(result):
             if len(output_lines)>=2:
                 v1=output_lines[-1].split()
                 v2=output_lines[-2].split()
-                print(v1[0],v2[0])
+                # print(v1[0],v2[0])
                 if v1[0]==v2[0]:
                     output_lines[-2] = output_lines[-2].strip() + " " + output_lines[-1].replace('<<'+'o'+'>sent_id='+k2+'>' + " " + sentence_without_hash1 + ' <<'+'o'+'>/sent_id> ','')
                     del output_lines[-1]
                 elif v1[0] in v2:
                     output_lines[-2] = output_lines[-2].strip() + " " + output_lines[-1].replace('<<'+'o'+'>sent_id='+k2+'>' + " " + sentence_without_hash1 + ' <<'+'o'+'>/sent_id> ','')
                     del output_lines[-1]
-                    print(output_lines[-1])
+                    # print(output_lines[-1])
                 elif v2[0] in v1:
                     output_lines[-2] = output_lines[-2].strip() + " " + output_lines[-1].replace('<<'+'o'+'>sent_id='+k2+'>' + " " + sentence_without_hash1 + ' <<'+'o'+'>/sent_id> ','')
                     del output_lines[-1]
@@ -206,7 +205,6 @@ def f2(result):
                 
 
             if i==len(result)-2:
-                print("var")
                 k1=get_id1(id_2)
                 sentence_without_hash1=result[i+1][1][1:]
                 print(sentence_without_hash1)
@@ -227,7 +225,6 @@ def f2(result):
         else:
             
             if i==len(result)-2:
-                print("var")
                 id_1 = result[i][0]
                 print(id_1)
                 id_2=result[i+1][0]
@@ -237,7 +234,7 @@ def f2(result):
                 sentence_without_hash = remove_word(sentence_without_hash)
                 sentence_without_hash1 = result[i+1][1][1:]  # Hindi sentence without hash
                 sentence_without_hash1 = remove_word(sentence_without_hash1)
-                print(sentence_without_hash1,'aaaa')
+                # print(sentence_without_hash1,'aaaa')
                 s = []
                 l = result[i+1][7]
                 n = get_id1(l)  # example 1a ,1b
@@ -249,7 +246,7 @@ def f2(result):
                     id_2 = result[j][0]
                     org_id2 = get_id1(id_2)
                     if n and n == org_id2:
-                        print(id_2)
+                        # print(id_2)
                         k1=get_id1(id_1)
                         k2=get_id1(id_2)
                         # sentence_without_hash1 = result[j][1][1:]
